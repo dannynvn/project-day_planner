@@ -6,33 +6,67 @@
 var saveButton = $('.btn');
 
 var dateTimeEl =  $('#currentDay');
+var timeBlocks = [
+    $('#hour-9'), 
+    $('#hour-10'), 
+    $('#hour-11'), 
+    $('#hour-12'), 
+    $('#hour-13'), 
+    $('#hour-14'), 
+    $('#hour-15'),
+    $('#hour-16'),
+    $('#hour-17')
+]
 
 //display current date in the header
 var currentDate = dayjs();
 dateTimeEl.text(currentDate.format('dddd, MMMM D, YYYY'));
 
 var currentTime = dayjs().format('HH');
-console.log('current time is: '+currentTime);
+
+// var timeBlock = $('#hour-9').data('id')
+// console.log(timeBlock);
+
+function colorTimeBlock() {
+    for (var i = 0; i < timeBlocks.length; i++) {
+        var eachTimeBlock = timeBlocks[i].data('id');
+        if (eachTimeBlock < currentTime) {
+            timeBlocks[i].addClass('past');
+        } else if (eachTimeBlock == currentTime) {
+            timeBlocks[i].addClass('present');
+        } else if (eachTimeBlock > currentTime) {
+            timeBlocks[i].addClass('future');
+        }
+    }
+   
+}
 
 
 function saveEvent(event) {
-    console.log(event.target);
-    //compare time to past, present, and future to apply style to text area element
-        
-    var selectedTimeBlock = $(event.target).parent().data('id');
-    console.log(currentTime);
-    console.log(selectedTimeBlock);
-    if (selectedTimeBlock < currentTime) {
-        $(event.target).parent().addClass('past');
-    } else if (selectedTimeBlock == currentTime) {
-        $(event.target).parent().addClass('present');
-    } else if (selectedTimeBlock > currentTime) {
-        $(event.target).parent().addClass('future');
-    }
+    
+    //compare time to past, present, and future to apply style to text area element    
+    // var selectedTimeBlock = $(event.target).parent().data('id');
+    // console.log(currentTime);
+    // console.log(selectedTimeBlock);
+    // if (selectedTimeBlock < currentTime) {
+    //     $(event.target).parent().addClass('past');
+    // } else if (selectedTimeBlock == currentTime) {
+    //     $(event.target).parent().addClass('present');
+    // } else if (selectedTimeBlock > currentTime) {
+    //     $(event.target).parent().addClass('future');
+    // }
+
+    //save user input to local storage
 
 }
 //listener for click events on save button
 saveButton.on('click', saveEvent);
+
+function init() {
+    colorTimeBlock();
+}
+
+init(); 
 
 
 $(function () {
