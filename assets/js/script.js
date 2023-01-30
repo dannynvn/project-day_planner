@@ -3,13 +3,55 @@
 // in the html.
 
 //variables referencing DOM elements
-var saveButton = $('save');
+var saveButton = $('.btn');
 
 var dateTimeEl =  $('#currentDay');
 
 //display current date in the header
-var currentDateTime = dayjs();
-dateTimeEl.text(currentDateTime.format('dddd, MMMM D, YYYY'));
+var currentDate = dayjs();
+dateTimeEl.text(currentDate.format('dddd, MMMM D, YYYY'));
+
+var currentTime = dayjs().format('HH');
+console.log('current time is: '+currentTime);
+
+
+function saveEvent(event) {
+    console.log(event.target);
+    //compare time to past present and future 
+
+    //if time block compared to current time is in the past, apply past style and save to local
+        //apply style for past timeblocks
+        
+    var selectedTimeBlock = $(event.target).parent().data('id');
+    console.log(currentTime);
+    console.log(selectedTimeBlock);
+    if (selectedTimeBlock < currentTime) {
+        $(event.target).parent().addClass('past');
+    } else if (selectedTimeBlock == currentTime) {
+        $(event.target).parent().addClass('present');
+    } else if (selectedTimeBlock > currentTime) {
+        $(event.target).parent().addClass('future');
+    }
+
+    
+        //var timeblock hour = dayjs()
+        //save event's current time is < timeblock.format(hh)
+    
+
+    //if time block compared to current time is in present hour, apply present style and save to local
+        //apply style for present time blocks
+        //var timeblock hour = dayjs()
+        //save event's current time is = timeblock.format(hh)
+
+    //if time block compared to current time is in future hour, apply future style and save to local
+        //apply style for future timeblocks
+        //var timeblock hour = dayjs()
+        //save event's current time is > timeblock.format(hh)
+
+}
+//listener for click events on save button
+saveButton.on('click', saveEvent);
+
 
 $(function () {
     // TODO: Add a listener for click events on the save button. This code should
