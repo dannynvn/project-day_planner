@@ -5,6 +5,11 @@
 //variables referencing DOM elements
 var saveButton = $('.btn');
 
+//variables for storing and rendering from local storage
+var selectedTextBox;
+var eventDescription;
+
+//array of id's referencing time block divs in the DOM
 var dateTimeEl =  $('#currentDay');
 var timeBlocks = [
     $('#hour-9'), 
@@ -18,15 +23,16 @@ var timeBlocks = [
     $('#hour-17')
 ]
 
+//current time variable to compare against timeblock for styling
+var currentTime = dayjs().format('HH');
+
+
 //display current date in the header
 var currentDate = dayjs();
 dateTimeEl.text(currentDate.format('dddd, MMMM D, YYYY'));
 
-var currentTime = dayjs().format('HH');
 
-// var timeBlock = $('#hour-9').data('id')
-// console.log(timeBlock);
-
+//function to style time blocks depending on current time
 function colorTimeBlock() {
     for (var i = 0; i < timeBlocks.length; i++) {
         var eachTimeBlock = timeBlocks[i].data('id');
@@ -38,58 +44,46 @@ function colorTimeBlock() {
             timeBlocks[i].addClass('future');
         }
     }
-   
 }
 
-
+//saves event text when user clicks save button
 function saveEvent(event) {
-    
-    //compare time to past, present, and future to apply style to text area element    
-    // var selectedTimeBlock = $(event.target).parent().data('id');
-    // console.log(currentTime);
-    // console.log(selectedTimeBlock);
-    // if (selectedTimeBlock < currentTime) {
-    //     $(event.target).parent().addClass('past');
-    // } else if (selectedTimeBlock == currentTime) {
-    //     $(event.target).parent().addClass('present');
-    // } else if (selectedTimeBlock > currentTime) {
-    //     $(event.target).parent().addClass('future');
-    // }
-
-    //save user input to local storage
-
+    var selectedTextBox = $(event.target).siblings('textarea').attr('id');
+    var eventDescription = $(event.target).siblings('textarea').val();
+    localStorage.setItem(selectedTextBox, eventDescription);
+    $('#save-notification').text('Event saved to local storage!');
 }
-//listener for click events on save button
-saveButton.on('click', saveEvent);
 
+
+//pulls stored data from local storage and renders in time blocks corresponding to
+// time blocks when saved previously
+//resource referenced: https://developer.mozilla.org/en-US/docs/Web/API/Storage/key
+function renderEvents() {
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = '#' + localStorage.key(i);
+        var storedEvents = localStorage.getItem(localStorage.key(i));
+        console.log(key)
+        $(key).append(storedEvents);
+        console.log(localStorage.getItem(localStorage.key(i)));
+    }
+    console.log('rendering')
+}
+
+//runs on page load and reload
 function init() {
     colorTimeBlock();
+    renderEvents();
 }
 
+
+//run init function when page loads
 init(); 
 
 
-$(function () {
-    // TODO: Add a listener for click events on the save button. This code should
-    // use the id in the containing time-block as a key to save the user input in
-    // local storage. HINT: What does `this` reference in the click listener
-    // function? How can DOM traversal be used to get the "hour-x" id of the
-    // time-block containing the button that was clicked? How might the id be
-    // useful when saving the description in local storage?
+//listener for click events on save button
+saveButton.on('click', saveEvent);
 
 
-    //
-    // TODO: Add code to apply the past, present, or future class to each time
-    // block by comparing the id to the current hour. HINTS: How can the id
-    // attribute of each time-block be used to conditionally add or remove the
-    // past, present, and future classes? How can Day.js be used to get the
-    // current hour in 24-hour time?
-    //
-    // TODO: Add code to get any user input that was saved in localStorage and set
-    // the values of the corresponding textarea elements. HINT: How can the id
-    // attribute of each time-block be used to do this?
-    //
-  });
 
 
   
