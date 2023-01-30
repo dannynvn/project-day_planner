@@ -17,10 +17,7 @@ console.log('current time is: '+currentTime);
 
 function saveEvent(event) {
     console.log(event.target);
-    //compare time to past present and future 
-
-    //if time block compared to current time is in the past, apply past style and save to local
-        //apply style for past timeblocks
+    //compare time to past, present, and future to apply style to text area element
         
     var selectedTimeBlock = $(event.target).parent().data('id');
     console.log(currentTime);
@@ -32,21 +29,6 @@ function saveEvent(event) {
     } else if (selectedTimeBlock > currentTime) {
         $(event.target).parent().addClass('future');
     }
-
-    
-        //var timeblock hour = dayjs()
-        //save event's current time is < timeblock.format(hh)
-    
-
-    //if time block compared to current time is in present hour, apply present style and save to local
-        //apply style for present time blocks
-        //var timeblock hour = dayjs()
-        //save event's current time is = timeblock.format(hh)
-
-    //if time block compared to current time is in future hour, apply future style and save to local
-        //apply style for future timeblocks
-        //var timeblock hour = dayjs()
-        //save event's current time is > timeblock.format(hh)
 
 }
 //listener for click events on save button
