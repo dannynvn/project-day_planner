@@ -1,7 +1,7 @@
 # Day Planner
 
 ## Description
-This project is a 9am to 5pm day planner built using JavaScript, JQuery, HTML, and CSS. Link to deployed application: 
+This project is a 9am to 5pm day planner built using JavaScript, JQuery, HTML, and CSS. Link to deployed application: https://dannynvn.github.io/project-day_planner/
 
 ## Usage
 This application includes the following functionality:
